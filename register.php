@@ -6,7 +6,9 @@ session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
-} ?>
+}
+
+?>
 <html lang="en">
 
 <head>
@@ -63,20 +65,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </div>
                     <div class="form-group">
                         <label>Service: </label>
-                        <select name="service">
 
 
                           <?php
 
                           $sql = "SELECT DISTINCT(groupname) FROM radgroupreply";
                           $result = mysqli_query($conn, $sql);
-
+                          if (mysqli_num_rows($result) > 0)
+                          {
+                            echo'<select name="service">';
                           while($row = mysqli_fetch_array($result)) {
                            ?>
                              <option><?php echo $row[groupname];?></option>
 
                                    <?php
                                      }
+                                     }
+                              else{
+                            echo "You first need to create service in order to add users!";
+                              }
                                     ?>
                         </select>
                     </div>
